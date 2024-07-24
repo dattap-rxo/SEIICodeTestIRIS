@@ -1,1 +1,53 @@
-<p>Display the subdivision data here!</p>
+<div class="container">
+  <div class="search">
+    <div>
+      <label>Search: </label>
+      <input type="text" (ngModelChange)="onSearchChange($event)" [ngModel]="searchText" />
+    </div>
+    <div class="filter">
+      <select [(ngModel)]="subDivision" (change)="filterList($event)">
+        <option value="undefined" selected disabled>Select Sub Division</option>
+        <option *ngFor="let div of subDivisionFilter" [ngValue]="div.id">{{div.value}}</option>
+      </select>
+    </div>
+
+  </div>
+  <table mat-table [dataSource]="dataSource">
+
+    <!-- name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+    <!-- Market Name Column -->
+    <ng-container matColumnDef="marketName">
+      <th mat-header-cell *matHeaderCellDef> Market Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.marketName}} </td>
+    </ng-container>
+
+    <!-- Country Column -->
+    <ng-container matColumnDef="country">
+      <th mat-header-cell *matHeaderCellDef> Country </th>
+      <td mat-cell *matCellDef="let element"> {{element.county}} </td>
+    </ng-container>
+
+    <!-- Map Image Date Column -->
+    <ng-container matColumnDef="nearMapImageDate">
+      <th mat-header-cell *matHeaderCellDef> Map Image Date </th>
+      <td mat-cell *matCellDef="let element"> {{element.nearMapImageDate | date : 'dd-MM-yyyy'}} </td>
+    </ng-container>
+
+    <!-- sub division Column -->
+    <ng-container matColumnDef="subdivisionStatusCode">
+      <th mat-header-cell *matHeaderCellDef> Sub Division Status </th>
+      <td mat-cell *matCellDef="let element"> {{element.subdivisionStatusCode}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+  </mat-paginator>
+</div>
